@@ -13,9 +13,7 @@ Again, it's crucial to reiterate that this isn't a recommendation for buying or 
 
 As noted in the software: 'Created by Asaf Zenou, inspired by Rule Number 1 Workshop. It's important to note that the formulas themselves for the calculation were taken from YouTube, and this is not advice for buying or selling stocks.
 
-<img width="960" alt="start" src="https://github.com/asafzenou/StocksInfo/assets/68349855/d0e4df83-8ea6-43ff-b913-06301a0dfa45">
-<img width="960" alt="Stock analtsis-didnt work" src="https://github.com/asafzenou/StocksInfo/assets/68349855/82b00c06-255b-4131-bae8-7415826ce9b2">
-<img width="960" alt="Stock Analysis-buy" src="https://github.com/asafzenou/StocksInfo/assets/68349855/49daca13-ca30-4208-b433-8295aa336e19">
-<img width="960" alt="CompanyInfo" src="https://github.com/asafzenou/StocksInfo/assets/68349855/b457bf73-14ec-4257-b571-be33bb3639a6">
+<img width="960" alt="CompanyInfo" src="https://github.com/asafzenou/StocksInfo/assets/68349855/b93752c6-e68f-4fa3-b3a2-54d1475f251d">
+
 
 
