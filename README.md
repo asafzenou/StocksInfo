@@ -14,7 +14,6 @@ Again, it's crucial to reiterate that this isn't a recommendation for buying or 
 As noted in the software: 'Created by Asaf Zenou, inspired by Rule Number 1 Workshop. It's important to note that the formulas themselves for the calculation were taken from YouTube, and this is not advice for buying or selling stocks.
 
 start:
-
 <img width="960" alt="CompanyInfo" src="https://github.com/asafzenou/StocksInfo/photos/start.PNG">
 
 
