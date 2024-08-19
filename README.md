@@ -3,7 +3,7 @@ This is a stock project that utilizes several methods to calculate the current s
 
 In this software, there are two options: 'Compute Company Info' and 'Compute Stock Analysis.'
 
-Under 'Compute Company Info,' input the stock ticker symbol to receive all the technical data needed for calculating the purchase price (designed for manual verification). This section provides comprehensive technical information about the chosen company for assessing its buy price.
+Under 'Compute Company Info,' input the stock ticker symbol to receive all the technical data needed for calculating the purchase price (designed for manual verification). This section provides comprehensive technical information of the chosen company for assessing its buy price.
 
 Under 'Compute Stock Analysis,' input the company's future growth rate (which must be above 15%). The software operates on a text file containing a substantial list of stocks. It filters out the stocks recommended for immediate purchase and those that aren't advisable for purchase at present.
 

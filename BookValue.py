@@ -10,7 +10,7 @@ class BookValue:
         - ticker_symbol (str): Stock ticker symbol
 
         Attributes:
-        - stock (dict): Information about the stock obtained using yfinance.
+        - stock (dict): information of the stock obtained using yfinance.
         - forward_PE (float): Forward Price to Earnings ratio.
         - estimated_eps (float): Estimated Earnings Per Share (EPS) based on forward PE ratio.
         - eps (float): Trailing Earnings Per Share (EPS).

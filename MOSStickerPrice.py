@@ -11,7 +11,7 @@ class MOSStickerPrice:
         - present (float): Present value or current valuation factor.
 
         Attributes:
-        - __stock (dict): Information about the stock obtained using yfinance (private attribute).
+        - __stock (dict): information of the stock obtained using yfinance (private attribute).
         - __present (float): Present value or current valuation factor (private attribute).
         - __f_gr (float): Future growth rate (private attribute).
         - __eps (float): Earnings Per Share (EPS) value (private attribute).

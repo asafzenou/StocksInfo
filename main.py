@@ -3,17 +3,12 @@ from tkinter import ttk
 import yfinance as yf
 import GetCompanyValue
 
+import concurrent.futures  # <--- שונה
+import yfinance as yf  # <--- שונה
+
+
 # Function to format the list for display
 def lst_ordered(lst):
-    """
-    Format the list elements for display in a visually aligned manner.
-
-    Args:
-    - lst (list): List of tuples representing data to be formatted.
-
-    Returns:
-    - list: Formatted list for display.
-    """
     if len(lst) > 0:
         get_max_len_first = len(max(lst, key=lambda x: len(x[0]))[0])
         get_max_len_second = len(max(lst, key=lambda x: len(x[1]))[1])
@@ -25,38 +20,46 @@ def lst_ordered(lst):
             lst[i] = f"{item_zero} {item_one} {item_two}"
     return lst
 
+
+# Function to fetch stock info
+def fetch_stock_info(company_symbol):  # <--- שונה
+    stock = yf.Ticker(company_symbol)  # <--- שונה
+    eps = float(stock.info["trailingEps"])  # <--- שונה
+    share_outstanding = int(stock.info["sharesOutstanding"])  # <--- שונה
+    fcf = int(stock.info["freeCashflow"])  # <--- שונה
+    fcf_per_share = fcf / share_outstanding  # <--- שונה
+    current_share_price = int(stock.info["currentPrice"])  # <--- שונה
+    operating_cash_flow = int(stock.info["operatingCashflow"])  # <--- שונה
+    tax = int(stock.get_financials().iloc[0]["TaxProvision"])  # <--- שונה
+    capital_exp = int(stock.get_cash_flow().iloc[0]["CapitalExpenditure"])  # <--- שונה
+
+    return {  # <--- שונה
+        "eps": eps,  # <--- שונה
+        "fcf_per_share": fcf_per_share,  # <--- שונה
+        "current_share_price": current_share_price,  # <--- שונה
+        "operating_cash_flow": operating_cash_flow,  # <--- שונה
+        "tax": tax,  # <--- שונה
+        "capital_exp": capital_exp  # <--- שונה
+    }
+
+
 # Function to get company information
 def get_company_info():
-    """
-    Retrieve company information based on the provided company symbol.
-
-    Fetches various financial data using the yfinance library and displays it in the GUI.
-    """
     company_symbol = entry_company_symbol.get()
     try:
-        stock = yf.Ticker(company_symbol)
-        eps = (float(stock.info["trailingEps"]))
-        share_outstanding = int(stock.info["sharesOutstanding"])
-        fcf = int(stock.info["freeCashflow"])
-        fcf_per_share = fcf/share_outstanding
-        current_share_price = int(stock.info["currentPrice"])
-        operating_cash_flow = int(stock.info["operatingCashflow"])
-        tax = int(stock.get_financials()[stock.get_financials().keys()[0]]["TaxProvision"])
-        capital_exp = int(stock.get_cash_flow()[stock.get_cash_flow().keys()[0]]["CapitalExpenditure"])
+        with concurrent.futures.ThreadPoolExecutor() as executor:  # <--- שונה
+            future = executor.submit(fetch_stock_info, company_symbol)  # <--- שונה
+            stock_info = future.result()  # <--- שונה
 
         # Display the results in the GUI
-        result_text_company.config(text=f"Capital Expenditure: {add_commas(capital_exp)}\n"
-                                        f"Tax: {add_commas(tax)}\n"
-                                        f"Operating Cash Flow: {add_commas(operating_cash_flow)}\n"
-                                        f"Current Share Price: {add_commas(current_share_price)}\n"
-                                        f"Free Cash Flow: {add_commas(fcf)}\n"
-                                        f"Shares Outstanding: {add_commas(share_outstanding)}\n"
-                                        f"Earnings Per Share (EPS): {(eps)}\n"
-                                        f"FCF Ratio: {add_commas(int(current_share_price/fcf_per_share))}\n\n")  # You can calculate FCF Ratio
-
-
+        result_text_company.config(text=f"Capital Expenditure: {stock_info['capital_exp']}\n"
+                                        f"EPS: {stock_info['eps']}\n"
+                                        f"Free Cash Flow per Share: {stock_info['fcf_per_share']}\n"
+                                        f"Current Share Price: {stock_info['current_share_price']}\n"
+                                        f"Operating Cash Flow: {stock_info['operating_cash_flow']}\n"
+                                        f"Tax Provision: {stock_info['tax']}")
     except Exception as e:
-        result_text_company.config(text=f"Error: {e}")
+        result_text_company.config(text=f"Error fetching data: {str(e)}")
 
 # Function to analyze stocks
 def analyze_stocks():
