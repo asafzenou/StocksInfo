@@ -1,7 +1,7 @@
 import tkinter as tk
 import yfinance as yf
 
-def get_company_info():
+def get_company_info():  # TODO: CHECK IT
     """
     Get company information based on the provided company symbol.
     Retrieves various financial data using the yfinance library and displays it in the GUI.
