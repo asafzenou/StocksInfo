@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-import yfinance as yf
-import GetCompanyValue
+from Domain import GetCompanyValue
 
 import concurrent.futures  # <--- שונה
 import yfinance as yf  # <--- שונה

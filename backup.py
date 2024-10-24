@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 import yfinance as yf
-import GetCompanyValue
+from Domain import GetCompanyValue
+
 
 # Function to format the list for display
 def lst_ordered(lst):
