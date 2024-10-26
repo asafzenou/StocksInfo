@@ -1,6 +1,6 @@
 from Domain.GetCompanyValue import GetCompanyValue
 import pandas as pd
-
+import openpyxl
 def analyze_stocks():
     """
     Analyze stock information and categorize stocks based on calculated values.
@@ -87,5 +87,6 @@ if __name__ == '__main__':
         print("\nDataFrame of Companies That Did Not Work:")
         print(df_not_went_through)
 
-    x = "x"
+    df_lst.to_excel('StocksToBuy.xlsx', index=False)
+    df_lst.to_csv('StocksToBuy.csv', index=False)
 
