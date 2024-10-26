@@ -1,6 +1,7 @@
 import tkinter as tk
+import webbrowser
 from tkinter import ttk
-from Domain import GetCompanyValue
+from Domain.GetCompanyValue import GetCompanyValue
 
 import concurrent.futures  # <--- שונה
 import yfinance as yf  # <--- שונה
@@ -70,6 +71,8 @@ def analyze_stocks():
     Displays the categorized results in the GUI.
     """
     future_gr = float(entry_growth_rate.get()) / 100
+    corporate_bond_yield = float(entry_cby.get()) / 100
+
 
     try:
         with open('stocks.txt', 'r') as file:
@@ -82,17 +85,21 @@ def analyze_stocks():
 
             for symbol in lines:
                 try:
-                    company_info = yf.Ticker(symbol).info
-                    company_name = company_info["longName"]
-                    stock = yf.Ticker(symbol)
-                    company_val = GetCompanyValue.GetCompanyValue(symbol, future_gr).get_val()
+                    company = GetCompanyValue(symbol, future_gr, corporate_bond_yield)
+                    company_val = company.get_val()
+                    company_name = company.get_company_name()
                     int_company_val = []
-                    current_share_price = int(stock.info["currentPrice"])
-                    for i in range(len(company_val)):
+                    current_share_price = int(company.get_company_current_price())
+                    for i in range(len(company_val[:2])):
                         int_company_val.append(int(company_val[i]))
-                    stock_info = [f"{company_name}({symbol})",f"Current Price: {current_share_price},", f"Buy Price: {int(max(company_val))} --> {int_company_val}"]
-                    max_val = max(company_val)
-                    if 0 <= max_val >= stock.info["currentPrice"]:
+                    stock_info = [f"{company_name}({symbol})",f"Current Price: {current_share_price},\n",
+                                  f"  Buy Price: {int(max(company_val[:2]))} --> Rule 1 mos :{company_val[0]}"
+                                  f"\n   Rule 1 ten cap: {company_val[1]}"
+                                  f"\n   Benjamin Grham: {company_val[2]}"
+                                  f"\n   Peter Lynch: {company_val[3]}"
+                                  f"\n   EV Ebitda Ratio: {company_val[4]}\n\n"]
+                    max_val = max(company_val[:2])
+                    if 0 <= max_val >= current_share_price:
                         to_buy.append(stock_info)
                     else:
                         not_to_buy.append(stock_info)
@@ -101,6 +108,15 @@ def analyze_stocks():
 
             buy = lst_ordered(to_buy)
             not_buy = lst_ordered(not_to_buy)
+
+            print(f"buy:\n")
+            for com in buy:
+                print(com)
+            print()
+            print(f"dont buy:\n")
+            for com in not_buy:
+                print(com)
+
 
             # Create a frame to contain the labels
             result_frame = tk.Frame(tab_stock_analysis)
@@ -192,6 +208,10 @@ def add_text_bottom(root, text):
     label = tk.Label(root, text=text)
     label.pack(side=tk.BOTTOM)
 
+def open_bond_yield_url():
+    url = "https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html"
+    webbrowser.open(url, new=1)
+
 # Create the main window
 root = tk.Tk()
 root.title("Stock Helper")
@@ -226,6 +246,15 @@ label_growth_rate = tk.Label(tab_stock_analysis, text="Enter future growth rate 
 label_growth_rate.pack()
 entry_growth_rate = tk.Entry(tab_stock_analysis)
 entry_growth_rate.pack()
+
+# Get it from here
+cop_bond_yield = tk.Label(tab_stock_analysis, text="Enter corporate bond yield:")
+cop_bond_yield.pack(pady=5)
+entry_cby = tk.Entry(tab_stock_analysis)
+entry_cby.pack(pady=5)
+
+url_button = tk.Button(tab_stock_analysis, text="Open Bond Yield URL", command=open_bond_yield_url)
+url_button.pack(pady=10)
 
 analyze_button = tk.Button(tab_stock_analysis, text="Analyze Stocks", command=choose_option)
 analyze_button.pack()
