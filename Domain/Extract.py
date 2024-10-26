@@ -14,7 +14,7 @@ class Extract:
         except Exception:
             self.__dividend_yield = 0
         self.__pe_ratio = float(self.__stock_info.get('trailingPE'))
-        self.__ebitda = float(self.__stock_info.get('ebitda')) # TODO
+        self.__ebitda = float(self.__stock_info.get('ebitda'))
         self.__enterprise_to_ebitda = float(self.__stock_info.get('enterpriseToEbitda'))
         self.__quarterly_income_statement = self.__stock.quarterly_financials
         self.__cash_flow = self.__stock.cash_flow

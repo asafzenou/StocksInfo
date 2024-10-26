@@ -1,2 +1,5 @@
 TSLA
-
+PLTR
+NVDA
+MSFT
+PYPL
