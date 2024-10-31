@@ -9,8 +9,8 @@ def analyze_stocks():
     based on calculated values into 'to buy', 'not to buy', and 'not went through' categories.
     Displays the categorized results in the GUI.
     """
-    entry_growth_rate = int(input('Enter growth rate in %: '))
-    entry_cby = int(input('Enter corporate bond yield in %: '))
+    entry_growth_rate = float(input('Enter growth rate in %: '))
+    entry_cby = float(input('Enter corporate bond yield in %: '))
 
     future_gr = float(entry_growth_rate) / 100
     corporate_bond_yield = float(entry_cby) / 100
@@ -28,7 +28,7 @@ def analyze_stocks():
                     company = GetCompanyValue(symbol, future_gr, corporate_bond_yield)
                     company_val = company.get_val()
                     company_name = company.get_company_name()
-                    current_share_price = int(company.get_company_current_price())
+                    current_share_price = float(company.get_company_current_price())
                     # stock_info = [
                     #     f"{company_name}({symbol})",
                     #     f"Current Price: {current_share_price},\n",
