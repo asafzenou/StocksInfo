@@ -96,11 +96,11 @@ if __name__ == '__main__':
         'Benjamin Graham',
         'Peter Lynch',
         'EV/EBITDA Ratio',
-        'ps',
-        'pb',
-        'pe',
+        'Price-to-Sales',
+        'Price-to-Book',
+        'Price-to-Earnings',
         'dividend',
-        'ev_sales'
+        'Enterprise Value-to-Sales'
     ])
 
     # Print the dataframes to verify
