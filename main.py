@@ -1,6 +1,11 @@
 from Domain.GetCompanyValue import GetCompanyValue
 import pandas as pd
+import numpy as np
 import openpyxl
+
+def round_number(num):
+    return np.round(num, 3) if num is not None else None
+
 def analyze_stocks():
     """
     Analyze stock information and categorize stocks based on calculated values.
@@ -38,8 +43,21 @@ def analyze_stocks():
                     #     f"\n   Peter Lynch: {company_val[3]}"
                     #     f"\n   EV Ebitda Ratio: {company_val[4]}\n\n"
                     # ]
-                    stock_info = [company_name, symbol, current_share_price, company_val[0],
-                                  company_val[1],company_val[2], company_val[3], company_val[4]]
+                    sector = company_val[0]
+                    industry = company_val[1]
+                    mos = np.round(company_val[2], 3)
+                    ten_cap = np.round(company_val[3], 3)
+                    benjamin_graham = (float(np.round(company_val[4][0], 3)), float(np.round(company_val[4][1], 3)))
+                    peter_lynch = (company_val[5][0], float(np.round(company_val[5][1], 3)))
+                    ev_ebitda_ratio = np.round(company_val[6], 3)
+                    ps = round_number(company_val[7])
+                    pb = round_number(company_val[8])
+                    pe = round_number(company_val[9])
+                    dividend = round_number(company_val[10])
+                    ev_sales = round_number(company_val[11])
+                    stock_info = [company_name, sector, industry, symbol, current_share_price, mos,
+                                  ten_cap, benjamin_graham, peter_lynch, ev_ebitda_ratio, ps, pb,
+                                  pe, dividend, ev_sales]
                     lst.append(stock_info)
                 except Exception:
                     not_went_through.append(symbol)
@@ -69,13 +87,20 @@ if __name__ == '__main__':
     lst, not_went_through = analyze_stocks()
     df_lst = pd.DataFrame(lst, columns=[
         'Company',
+        'Sector',
+        'Industry',
         'Ticker',
         'Current Price',
         'Rule 1 MOS',
         'Rule 1 Ten Cap',
         'Benjamin Graham',
         'Peter Lynch',
-        'EV/EBITDA Ratio'
+        'EV/EBITDA Ratio',
+        'ps',
+        'pb',
+        'pe',
+        'dividend',
+        'ev_sales'
     ])
 
     # Print the dataframes to verify

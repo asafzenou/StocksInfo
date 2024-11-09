@@ -63,7 +63,16 @@ class GetCompanyValue:
         ev_ebitda_ratio = EvEbitdaRatio(self.__extract.get_ev(),
                                         self.__extract.get_ebitda()).get_ev_ebitda_ratio()
 
-        return mos, ten_cap, benjamin_grham, peter_lynch, ev_ebitda_ratio
+        sector = self.__extract.get_sector()
+        industry = self.__extract.get_industry()
+        ps = self.__extract.get_ps_ratio()
+        pb = self.__extract.get_pb_ratio()
+        pe = self.__extract.get_pe_ratio()
+        dividend = self.__extract.get_dividend_yield()
+        ev_sales = self.__extract.get_ev_sales()
+        return (sector, industry, mos, ten_cap, benjamin_grham,
+                peter_lynch, ev_ebitda_ratio, ps, pb, pe, dividend,
+                ev_sales)
 
     def get_company_name(self):
         return self.__extract.get_company_name()
